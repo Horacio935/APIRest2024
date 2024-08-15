@@ -85,11 +85,11 @@ exports.updateById = async (req, res) => {
         } else {
             // Update new change to database
             let updatedObject = {
-                libro: req.body.id_libro,
-                usuario: req.body.id_usuario,
-                fechasalida: req.body.fecha_salida,
-                fechamax: req.body.fecha_max,
-                fechadevolucion: req.body.fecha_devolucion
+                id_libro: req.body.id_libro,
+                id_usuario: req.body.id_usuario,
+                fecha_salida: req.body.fecha_salida,
+                fecha_max: req.body.fecha_max,
+                fecha_devolucion: req.body.fecha_devolucion
             }
             let result = await Prestamo.update(updatedObject, { returning: true, where: { id: prestamoId } });
 
