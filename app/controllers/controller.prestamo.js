@@ -1,23 +1,23 @@
 const db = require('../config/db.config.js');
-const PrestamoLibro = db.PrestamoLibro;
+const Prestamo = db.Prestamo;
 
 exports.create = (req, res) => {
-    let prestamoLibro = {};
+    let prestamo = {};
 
     try {
-        // Construir el objeto PrestamoLibro a partir del cuerpo de la solicitud
-        prestamoLibro.codigo_libro = req.body.codigo_libro;
-        prestamoLibro.codigo_usuario = req.body.codigo_usuario;
-        prestamoLibro.fecha_salida = req.body.fecha_salida;
-        prestamoLibro.fecha_maxima_devolucion = req.body.fecha_maxima_devolucion;
-        prestamoLibro.fecha_devolucion = req.body.fecha_devolucion;
+        // Building Prestamo object from uploading request's body
+        prestamo.id_libro = req.body.id_libro;
+        prestamo.id_usuario = req.body.id_usuario;
+        prestamo.fecha_salida = req.body.fecha_salida;
+        prestamo.fecha_max = req.body.fecha_max;
+        prestamo.fecha_devolucion = req.body.fecha_devolucion;
 
-        // Guardar en la base de datos MySQL
-        PrestamoLibro.create(prestamoLibro).then(result => {
-            // Enviar mensaje de éxito al cliente
+        // Save to MySQL database
+        Prestamo.create(prestamo).then(result => {
+            // Send uploading message to client
             res.status(200).json({
-                message: "Upload Successfully a PrestamoLibro with id = " + result.id,
-                prestamoLibro: result,
+                message: "Upload Successfully a Prestamo with id = " + result.id,
+                prestamo: result,
             });
         });
     } catch (error) {
@@ -29,16 +29,16 @@ exports.create = (req, res) => {
 }
 
 exports.retrieveAllPrestamos = (req, res) => {
-    // Obtener toda la información de PrestamoLibro
-    PrestamoLibro.findAll()
+    // Find all Prestamo information
+    Prestamo.findAll()
         .then(prestamoInfos => {
             res.status(200).json({
-                message: "Get all PrestamoLibros' Infos Successfully!",
-                prestamos: prestamoInfos
+                message: "Get all Prestamos' Infos Successfully!",
+                prestamoes: prestamoInfos
             });
         })
         .catch(error => {
-            // Mostrar en consola
+            // Log on console
             console.log(error);
 
             res.status(500).json({
@@ -49,17 +49,17 @@ exports.retrieveAllPrestamos = (req, res) => {
 }
 
 exports.getPrestamoById = (req, res) => {
-    // Encontrar la información de PrestamoLibro por ID
+    // Find Prestamo information by ID
     let prestamoId = req.params.id;
-    PrestamoLibro.findByPk(prestamoId)
+    Prestamo.findByPk(prestamoId)
         .then(prestamo => {
             res.status(200).json({
-                message: "Successfully Get a PrestamoLibro with id = " + prestamoId,
+                message: "Successfully Get a Prestamo with id = " + prestamoId,
                 prestamo: prestamo
             });
         })
         .catch(error => {
-            // Mostrar en consola
+            // Log on console
             console.log(error);
 
             res.status(500).json({
@@ -69,45 +69,46 @@ exports.getPrestamoById = (req, res) => {
         });
 }
 
+
 exports.updateById = async (req, res) => {
     try {
         let prestamoId = req.params.id;
-        let prestamo = await PrestamoLibro.findByPk(prestamoId);
+        let prestamo = await Prestamo.findByPk(prestamoId);
 
         if (!prestamo) {
-            // Responder al cliente
+            // Return a response to client
             res.status(404).json({
-                message: "Not Found for updating a PrestamoLibro with id = " + prestamoId,
+                message: "Not Found for updating a prestamo with id = " + prestamoId,
                 prestamo: "",
                 error: "404"
             });
         } else {
-            // Actualizar cambios en la base de datos
+            // Update new change to database
             let updatedObject = {
-                codigo_libro: req.body.codigo_libro,
-                codigo_usuario: req.body.codigo_usuario,
-                fecha_salida: req.body.fecha_salida,
-                fecha_maxima_devolucion: req.body.fecha_maxima_devolucion,
-                fecha_devolucion: req.body.fecha_devolucion
+                libro: req.body.id_libro,
+                usuario: req.body.id_usuario,
+                fechasalida: req.body.fecha_salida,
+                fechamax: req.body.fecha_max,
+                fechadevolucion: req.body.fecha_devolucion
             }
-            let result = await PrestamoLibro.update(updatedObject, { returning: true, where: { id: prestamoId } });
+            let result = await Prestamo.update(updatedObject, { returning: true, where: { id: prestamoId } });
 
-            // Responder al cliente
+            // Return the response to client
             if (!result) {
                 res.status(500).json({
-                    message: "Error -> Can not update a PrestamoLibro with id = " + req.params.id,
+                    message: "Error -> Can not update a prestamo with id = " + req.params.id,
                     error: "Can NOT Updated",
                 });
             }
 
             res.status(200).json({
-                message: "Update successfully a PrestamoLibro with id = " + prestamoId,
+                message: "Update successfully a Prestamo with id = " + prestamoId,
                 prestamo: updatedObject,
             });
         }
     } catch (error) {
         res.status(500).json({
-            message: "Error -> Can not update a PrestamoLibro with id = " + req.params.id,
+            message: "Error -> Can not update a prestamo with id = " + req.params.id,
             error: error.message
         });
     }
@@ -116,24 +117,25 @@ exports.updateById = async (req, res) => {
 exports.deleteById = async (req, res) => {
     try {
         let prestamoId = req.params.id;
-        let prestamo = await PrestamoLibro.findByPk(prestamoId);
+        let prestamo = await Prestamo.findByPk(prestamoId);
 
         if (!prestamo) {
             res.status(404).json({
-                message: "Does Not exist a PrestamoLibro with id = " + prestamoId,
+                message: "Does Not exist a Prestamo with id = " + prestamoId,
                 error: "404",
             });
         } else {
             await prestamo.destroy();
             res.status(200).json({
-                message: "Delete Successfully a PrestamoLibro with id = " + prestamoId,
+                message: "Delete Successfully a Prestamo with id = " + prestamoId,
                 prestamo: prestamo,
             });
         }
     } catch (error) {
         res.status(500).json({
-            message: "Error -> Can NOT delete a PrestamoLibro with id = " + req.params.id,
+            message: "Error -> Can NOT delete a prestamo with id = " + req.params.id,
             error: error.message,
         });
     }
 }
+

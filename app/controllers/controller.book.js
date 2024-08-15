@@ -36,7 +36,7 @@ exports.retrieveAllBooks = (req, res) => {
     Book.findAll()
         .then(bookInfos => {
             res.status(200).json({
-                message: "Get all Bookes' Infos Successfully!",
+                message: "Get all Books' Infos Successfully!",
                 bookes: bookInfos
             });
         })

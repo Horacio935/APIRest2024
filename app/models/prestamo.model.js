@@ -5,19 +5,19 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      codigo_libro: {
-        type: Sequelize.STRING,
+      id_libro: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      codigo_usuario: {
-        type: Sequelize.STRING,
+      id_usuario: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       fecha_salida: {
         type: Sequelize.DATE,
         allowNull: false
       },
-      fecha_maxima_devolucion: {
+      fecha_max: {
         type: Sequelize.DATE,
         allowNull: false
       },
