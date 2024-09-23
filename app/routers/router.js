@@ -18,8 +18,8 @@ router.get('/api/customers/pagefiltersort', customers.pagingfilteringsorting);
 router.put('/api/customers/update/:id', customers.updateById);
 router.delete('/api/customers/delete/:id', customers.deleteById);
 
-router.post('/api/employee/', employee.create);
-router.get('/api/employee/', employee.retrieveAllEmployees);
+router.post('/api/employee', employee.create);
+router.get('/api/employee', employee.retrieveAllEmployees);
 router.get('/api/employee/onebyid/:id', employee.getEmployeeById);
 router.get('/api/employee/filteringbyage', employee.filteringByAge);
 router.get('/api/employee/pagination', employee.pagination);
