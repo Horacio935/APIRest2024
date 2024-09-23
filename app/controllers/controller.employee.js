@@ -6,10 +6,10 @@ exports.create = (req, res) => {
 
     try{
         // Building Employee object from upoading request's body
-        employee.firstname = req.body.firstname;
-        employee.lastname = req.body.lastname;
+        employee.nombre = req.body.nombre;
+        employee.nit = req.body.nit;
         employee.address = req.body.address;
-        employee.age = req.body.age;
+        employee.telefono = req.body.telefono;
     
         // Save to MySQL database
         Employee.create(employee).then(result => {    
@@ -183,10 +183,10 @@ exports.updateById = async (req, res) => {
         } else {    
             // update new change to database
             let updatedObject = {
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
+                nombre: req.body.nombre,
+                nit: req.body.nit,
                 address: req.body.address,
-                age: req.body.age
+                telefono: req.body.telefono
             }
             let result = await Employee.update(updatedObject, {returning: true, where: {id: employeeId}});
             
