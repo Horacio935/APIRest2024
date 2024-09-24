@@ -29,13 +29,13 @@ exports.create = (req, res) => {
     }
 }
 
-exports.retrieveAllCatedraticos = (req, res) => {
+exports.retrieveAllIngresos = (req, res) => {
     // find all Ingreso information from 
     Ingreso.findAll()
-        .then(catedraticoInfos => {
+        .then(ingresoInfos => {
             res.status(200).json({
-                message: "Get all Catedraticos' Infos Successfully!",
-                catedraticos: catedraticoInfos
+                message: "Get all Ingresos' Infos Successfully!",
+                ingresos: ingresoInfos
             });
         })
         . catch(error => {
@@ -49,14 +49,14 @@ exports.retrieveAllCatedraticos = (req, res) => {
         });
 }
 
-exports.getCatedraticoById = (req, res) => {
+exports.getIngresoById = (req, res) => {
   // find all Ingreso information from 
-  let catedraticoId = req.params.id;
-  Ingreso.findByPk(catedraticoId)
+  let ingresoId = req.params.id;
+  Ingreso.findByPk(ingresoId)
       .then(ingreso => {
           res.status(200).json({
-              message: " Successfully Get a Ingreso with id = " + catedraticoId,
-              catedraticos: ingreso
+              message: " Successfully Get a Ingreso with id = " + ingresoId,
+              ingresos: ingreso
           });
       })
       . catch(error => {
@@ -72,13 +72,13 @@ exports.getCatedraticoById = (req, res) => {
 
 exports.updateById = async (req, res) => {
     try{
-        let catedraticoId = req.params.id;
-        let ingreso = await Ingreso.findByPk(catedraticoId);
+        let ingresoId = req.params.id;
+        let ingreso = await Ingreso.findByPk(ingresoId);
     
         if(!ingreso){
             // return a response to client
             res.status(404).json({
-                message: "Not Found for updating a ingreso with id = " + catedraticoId,
+                message: "Not Found for updating a ingreso with id = " + ingresoId,
                 ingreso: "",
                 error: "404"
             });
@@ -90,7 +90,7 @@ exports.updateById = async (req, res) => {
                 FechaHoraSalida: req.body.FechaHoraSalida,
                 Estatus: req.body.Estatus
             }
-            let result = await Ingreso.update(updatedObject, {returning: true, where: {id: catedraticoId}});
+            let result = await Ingreso.update(updatedObject, {returning: true, where: {id: ingresoId}});
             
             // return the response to client
             if(!result) {
@@ -101,7 +101,7 @@ exports.updateById = async (req, res) => {
             }
 
             res.status(200).json({
-                message: "Update successfully a Ingreso with id = " + catedraticoId,
+                message: "Update successfully a Ingreso with id = " + ingresoId,
                 ingreso: updatedObject,
             });
         }
@@ -115,18 +115,18 @@ exports.updateById = async (req, res) => {
 
 exports.deleteById = async (req, res) => {
     try{
-        let catedraticoId = req.params.id;
-        let ingreso = await Ingreso.findByPk(catedraticoId);
+        let ingresoId = req.params.id;
+        let ingreso = await Ingreso.findByPk(ingresoId);
 
         if(!ingreso){
             res.status(404).json({
-                message: "Does Not exist a Ingreso with id = " + catedraticoId,
+                message: "Does Not exist a Ingreso with id = " + ingresoId,
                 error: "404",
             });
         } else {
             await ingreso.destroy();
             res.status(200).json({
-                message: "Delete Successfully a Ingreso with id = " + catedraticoId,
+                message: "Delete Successfully a Ingreso with id = " + ingresoId,
                 ingreso: ingreso,
             });
         }

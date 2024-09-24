@@ -29,13 +29,13 @@ exports.create = (req, res) => {
     }
 }
 
-exports.retrieveAllCatedraticos = (req, res) => {
+exports.retrieveAllHorarios = (req, res) => {
     // find all Horario information from 
     Horario.findAll()
-        .then(catedraticoInfos => {
+        .then(horarioInfos => {
             res.status(200).json({
-                message: "Get all Catedraticos' Infos Successfully!",
-                catedraticos: catedraticoInfos
+                message: "Get all Horarios' Infos Successfully!",
+                horarios: horarioInfos
             });
         })
         . catch(error => {
@@ -49,14 +49,14 @@ exports.retrieveAllCatedraticos = (req, res) => {
         });
 }
 
-exports.getCatedraticoById = (req, res) => {
+exports.getHorarioById = (req, res) => {
   // find all Horario information from 
-  let catedraticoId = req.params.id;
-  Horario.findByPk(catedraticoId)
+  let horarioId = req.params.id;
+  Horario.findByPk(horarioId)
       .then(horario => {
           res.status(200).json({
-              message: " Successfully Get a Horario with id = " + catedraticoId,
-              catedraticos: horario
+              message: " Successfully Get a Horario with id = " + horarioId,
+              horarios: horario
           });
       })
       . catch(error => {
@@ -72,13 +72,13 @@ exports.getCatedraticoById = (req, res) => {
 
 exports.updateById = async (req, res) => {
     try{
-        let catedraticoId = req.params.id;
-        let horario = await Horario.findByPk(catedraticoId);
+        let horarioId = req.params.id;
+        let horario = await Horario.findByPk(horarioId);
     
         if(!horario){
             // return a response to client
             res.status(404).json({
-                message: "Not Found for updating a horario with id = " + catedraticoId,
+                message: "Not Found for updating a horario with id = " + horarioId,
                 horario: "",
                 error: "404"
             });
@@ -90,7 +90,7 @@ exports.updateById = async (req, res) => {
                 HoraInicio: req.body.HoraInicio,
                 HoraFin: req.body.HoraFin
             }
-            let result = await Horario.update(updatedObject, {returning: true, where: {id: catedraticoId}});
+            let result = await Horario.update(updatedObject, {returning: true, where: {id: horarioId}});
             
             // return the response to client
             if(!result) {
@@ -101,7 +101,7 @@ exports.updateById = async (req, res) => {
             }
 
             res.status(200).json({
-                message: "Update successfully a Horario with id = " + catedraticoId,
+                message: "Update successfully a Horario with id = " + horarioId,
                 horario: updatedObject,
             });
         }
@@ -115,18 +115,18 @@ exports.updateById = async (req, res) => {
 
 exports.deleteById = async (req, res) => {
     try{
-        let catedraticoId = req.params.id;
-        let horario = await Horario.findByPk(catedraticoId);
+        let horarioId = req.params.id;
+        let horario = await Horario.findByPk(horarioId);
 
         if(!horario){
             res.status(404).json({
-                message: "Does Not exist a Horario with id = " + catedraticoId,
+                message: "Does Not exist a Horario with id = " + horarioId,
                 error: "404",
             });
         } else {
             await horario.destroy();
             res.status(200).json({
-                message: "Delete Successfully a Horario with id = " + catedraticoId,
+                message: "Delete Successfully a Horario with id = " + horarioId,
                 horario: horario,
             });
         }
