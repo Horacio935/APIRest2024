@@ -33,5 +33,8 @@ db.Product = require('../models/product.model.js')(sequelize, Sequelize);
 db.Branch = require('../models/branch.model.js')(sequelize, Sequelize);
 db.Book = require('../models/books.model.js')(sequelize, Sequelize)
 db.Prestamo = require('../models/prestamo.model.js')(sequelize, Sequelize)
+db.Catedratico = require('../models/catedratico.model.js')(sequelize, Sequelize);
+db.Horario = require('../models/horario.model.js')(sequelize, Sequelize);
+db.Ingreso = require('../models/ingreso.model.js')(sequelize, Sequelize);
 
 module.exports = db;

@@ -8,6 +8,27 @@ const product = require('../controllers/controller.product.js');
 const branch = require('../controllers/controller.branch.js');
 const book = require('../controllers/controller.book.js');
 const prestamo = require('../controllers/controller.prestamo.js');
+const catedratico = require('../controllers/controller.catedratico.js');
+const horario = require('../controllers/controller.horario.js');
+const ingreso = require('../controllers/controller.ingreso.js');
+
+router.post('/api/catedratico/create', catedratico.create);
+router.get('/api/catedratico/all', catedratico.retrieveAllCatedraticos);
+router.get('/api/catedratico/onebyid/:id', catedratico.getCatedraticoById);
+router.put('/api/catedratico/update/:id', catedratico.updateById);
+router.delete('/api/catedratico/delete/:id', catedratico.deleteById);
+
+router.post('/api/horario/create', horario.create);
+router.get('/api/horario/all', horario.retrieveAllHorarios);
+router.get('/api/horario/onebyid/:id', horario.getHorarioById);
+router.put('/api/horario/update/:id', horario.updateById);
+router.delete('/api/horario/delete/:id', horario.deleteById);
+
+router.post('/api/ingreso/create', ingreso.create);
+router.get('/api/ingreso/all', ingreso.retrieveAllIngresos);
+router.get('/api/ingreso/onebyid/:id', ingreso.getIngresoById);
+router.put('/api/ingreso/update/:id', ingreso.updateById);
+router.delete('/api/ingreso/delete/:id', ingreso.deleteById);
 
 router.post('/api/customers/create', customers.create);
 router.get('/api/customers/all', customers.retrieveAllCustomers);
